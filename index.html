@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hussein - Code x Capital</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;400;700&family=Inter:wght@100;200;400;600;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Modern Neo-Cyberpunk Palette */
+            --neon-cyan: #00FFFF;
+            --electric-purple: #8B5CF6;
+            --hot-pink: #EC4899;
+            --lime-green: #10B981;
+            --deep-black: #0A0A0A;
+            --dark-gray: #1F1F23;
+            --medium-gray: #2D2D30;
+            --light-gray: #3E3E42;
+            --pure-white: #FFFFFF;
+            --warm-white: #F8FAFC;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--deep-black);
+            color: var(--warm-white);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: all 0.1s ease;
+        }
+
+        .cursor.hover {
+            transform: scale(2);
+            background: var(--hot-pink);
+        }
+
+        /* Matrix Rain Background */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.1;
+        }
+
+        /* 3D Scene Container */
+        #three-scene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism Base */
+        .glass {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+
+        /* Navigation Terminal Style */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--neon-cyan);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .terminal-prompt {
+            color: var(--lime-green);
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: 400;
+        }
+
+        .nav-links a:hover {
+            color: var(--hot-pink);
+            text-shadow: 0 0 10px var(--hot-pink);
+        }
+
+        .nav-links a::before {
+            content: '> ';
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            opacity: 1;
+        }
+
+        /* Crypto Ticker */
+        .crypto-ticker {
+            position: fixed;
+            top: 70px;
+            width: 100%;
+            background: linear-gradient(90deg, var(--electric-purple), var(--hot-pink), var(--neon-cyan));
+            padding: 8px 0;
+            z-index: 999;
+            overflow: hidden;
+        }
+
+        .ticker-content {
+            display: flex;
+            animation: scroll-left 30s linear infinite;
+            white-space: nowrap;
+        }
+
+        .ticker-item {
+            margin-right: 50px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--deep-black);
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 0 2rem;
+            animation: heroSlideUp 1.5s ease;
+        }
+
+        .glitch-text {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--hot-pink), var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glitch 2s infinite;
+            position: relative;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translateX(0); }
+            10% { transform: translateX(-2px) skewX(-5deg); }
+            20% { transform: translateX(2px) skewX(5deg); }
+            30% { transform: translateX(-1px) skewX(-2deg); }
+            40% { transform: translateX(1px) skewX(2deg); }
+            50% { transform: translateX(0); }
+        }
+
+        .terminal-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--lime-green);
+            margin-bottom: 1rem;
+        }
+
+        .typing-animation {
+            border-right: 2px solid var(--neon-cyan);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: transparent; }
+            51%, 100% { border-color: var(--neon-cyan); }
+        }
+
+        /* Interactive Code Editor */
+        .code-editor {
+            background: var(--dark-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--neon-cyan);
+            font-family: 'JetBrains Mono', monospace;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-editor::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(90deg, var(--electric-purple), var(--hot-pink));
+            border-radius: 12px 12px 0 0;
+        }
+
+        .code-editor-header {
+            position: absolute;
+            top: 8px;
+            left: 15px;
+            display: flex;
+            gap: 6px;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-dot.red { background: #FF5F56; }
+        .code-dot.yellow { background: #FFBD2E; }
+        .code-dot.green { background: #27CA3F; }
+
+        .code-content {
+            margin-top: 20px;
+            color: var(--neon-cyan);
+            line-height: 1.6;
+        }
+
+        .code-keyword { color: var(--hot-pink); }
+        .code-string { color: var(--lime-green); }
+        .code-number { color: var(--electric-purple); }
+
+        /* Holographic Cards */
+        .holo-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .holo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .holo-card:hover::before {
+            left: 100%;
+        }
+
+        .holo-card:hover {
+            transform: rotateX(5deg) rotateY(5deg) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 4rem;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Trading Dashboard */
+        .trading-dashboard {
+            background: var(--dark-gray);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--neon-cyan);
+            margin: 3rem 0;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-title {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--neon-cyan);
+            font-weight: 700;
+        }
+
+        .profit-indicator {
+            color: var(--lime-green);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .metric-card {
+            background: var(--medium-gray);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .metric-label {
+            color: var(--warm-white);
+            margin-top: 0.5rem;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 25px 50px rgba(236, 72, 153, 0.3);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, var(--electric-purple), var(--hot-pink));
+            padding: 2rem;
+            position: relative;
+        }
+
+        .project-body {
+            padding: 2rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--neon-cyan), var(--electric-purple));
+            color: var(--deep-black);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--hot-pink);
+            border: 2px solid var(--hot-pink);
+        }
+
+        .btn-secondary:hover {
+            background: var(--hot-pink);
+            color: var(--deep-black);
+            box-shadow: 0 15px 30px rgba(236, 72, 153, 0.4);
+        }
+
+        /* Animations */
+        @keyframes heroSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .glitch-text {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            section {
+                padding: 80px 1rem;
+            }
+            
+            .holo-card:hover {
+                transform: scale(1.02);
+            }
+        }
+
+        /* Particle Effects */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--neon-cyan);
+            opacity: 0.7;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Sound Controls */
+        .sound-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .sound-btn {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: var(--neon-cyan);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sound-btn:hover {
+            background: var(--neon-cyan);
+            color: var(--deep-black);
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    
+    <!-- Matrix Rain Background -->
+    <canvas class="matrix-rain"></canvas>
+    
+    <!-- 3D Scene -->
+    <div id="three-scene"></div>
+    
+    <!-- Crypto Ticker -->
+    <div class="crypto-ticker">
+        <div class="ticker-content">
+            <span class="ticker-item">BTC: $98,450 ↗ +2.3%</span>
+            <span class="ticker-item">ETH: $3,720 ↗ +5.1%</span>
+            <span class="ticker-item">SOL: $245 ↗ +8.7%</span>
+            <span class="ticker-item">PORTFOLIO: +$47,892 ↗ +12.4%</span>
+            <span class="ticker-item">ALGO PROFIT: +$23,156 ↗ +18.9%</span>
+            <span class="ticker-item">BTC: $98,450 ↗ +2.3%</span>
+            <span class="ticker-item">ETH: $3,720 ↗ +5.1%</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="terminal-prompt">hussein@codexcapital:~$</div>
+            <ul class="nav-links">
+                <li><a href="#home">./home</a></li>
+                <li><a href="#about">./about</a></li>
+                <li><a href="#skills">./skills</a></li>
+                <li><a href="#projects">./projects</a></li>
+                <li><a href="#contact">./contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="particles"></div>
+        <div class="hero-content">
+            <h1 class="glitch-text">HUSSEIN</h1>
+            <div class="terminal-text">
+                <span class="typing-animation" id="typing-text"></span>
+            </div>
+            
+            <!-- Interactive Code Editor -->
+            <div class="code-editor">
+                <div class="code-editor-header">
+                    <div class="code-dot red"></div>
+                    <div class="code-dot yellow"></div>
+                    <div class="code-dot green"></div>
+                </div>
+                <div class="code-content">
+                    <div><span class="code-keyword">class</span> <span class="code-string">FinTechDeveloper</span> {</div>
+                    <div>&nbsp;&nbsp;<span class="code-keyword">constructor</span>() {</div>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;this.skills = [<span class="code-string">'React'</span>, <span class="code-string">'Node.js'</span>, <span class="code-string">'Python'</span>, <span class="code-string">'Blockchain'</span>];</div>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;this.passion = <span class="code-string">'Building the future of finance'</span>;</div>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;this.roi = <span class="code-number">847.2</span>%; <span style="color: #6B7280;">// Portfolio performance</span></div>
+                    <div>&nbsp;&nbsp;}</div>
+                    <div>}</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+                <a href="#projects" class="btn btn-primary">Launch Projects</a>
+                <a href="#contact" class="btn btn-secondary">Initialize Contact</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section with Trading Dashboard -->
+    <section id="about" class="fade-in">
+        <h2 class="section-title">System Overview</h2>
+        
+        <!-- Trading Dashboard -->
+        <div class="trading-dashboard">
+            <div class="dashboard-header">
+                <h3 class="dashboard-title">LIVE PORTFOLIO METRICS</h3>
+                <div class="profit-indicator">+$71,293 (24h)</div>
+            </div>
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="portfolio-value">$847,293</div>
+                    <div class="metric-label">Total Value</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="roi-percent">+847%</div>
+                    <div class="metric-label">All-Time ROI</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="algorithms">23</div>
+                    <div class="metric-label">Active Algorithms</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="trades">1,847</div>
+                    <div class="metric-label">Successful Trades</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-top: 3rem;">
+            <div class="holo-card">
+                <h3 style="color: var(--neon-cyan); margin-bottom: 1.5rem;">The Developer</h3>
+                <p style="line-height: 1.8; margin-bottom: 1rem;">Full-stack engineer specializing in financial technology. I build systems that don't just work—they transform how people interact with money and data.</p>
+                <p style="line-height: 1.8;">Currently developing next-gen trading algorithms with machine learning, creating DeFi protocols, and building fintech applications that bridge traditional finance with blockchain technology.</p>
+            </div>
+            <div class="holo-card">
+                <h3 style="color: var(--hot-pink); margin-bottom: 1.5rem;">The Vision</h3>
+                <p style="line-height: 1.8; margin-bottom: 1rem;">Democratizing financial technology through intelligent automation and intuitive design. Every line of code serves the mission: making complex financial concepts accessible to everyone.</p>
+                <p style="line-height: 1.8;">From algorithmic trading systems to DeFi platforms, I create solutions that empower individuals to take control of their financial future.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="fade-in">
+        <h2 class="section-title">Core Modules</h2>
+        <div class="skills-grid">
+            <div class="holo-card">
+                <i class="fas fa-code" style="font-size: 3rem; color: var(--neon-cyan); margin-bottom: 1rem;"></i>
+                <h3>Full-Stack Development</h3>
+                <p>React, Node.js, Python, TypeScript, Next.js, GraphQL, PostgreSQL, MongoDB</p>
+            </div>
+            <div class="holo-card">
+                <i class="fas fa-chart-line" style="font-size: 3rem; color: var(--lime-green); margin-bottom: 1rem;"></i>
+                <h3>Financial Engineering</h3>
+                <p>Algorithmic trading, DeFi protocols, smart contracts, quantitative analysis, risk management</p>
+            </div>
+            <div class="holo-card">
+                <i class="fas fa-brain" style="font-size: 3rem; color: var(--hot-pink); margin-bottom: 1rem;"></i>
+                <h3>AI & Machine Learning</h3>
+                <p>TensorFlow, PyTorch, predictive modeling, natural language processing, computer vision</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="fade-in">
+        <h2 class="section-title">Featured Builds</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Neural Trading System</h3>
+                    <p style="opacity: 0.9; margin-top: 0.5rem;">AI-powered algorithmic trading platform</p>
+                </div>
+                <div class="project-body">
+                    <p>Deep learning system that analyzes market patterns and executes trades with 87% accuracy. Built with Python, TensorFlow, and real-time data processing.</p>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap;">
+                        <span style="background: var(--electric-purple); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Python</span>
+                        <span style="background: var(--neon-cyan); color: var(--deep-black); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">AI/ML</span>
+                        <span style="background: var(--lime-green); color: var(--deep-black); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Finance</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>DeFi Dashboard Pro</h3>
+                    <p style="opacity: 0.9; margin-top: 0.5rem;">Multi-chain DeFi portfolio manager</p>
+                </div>
+                <div class="project-body">
+                    <p>Comprehensive dashboard for managing DeFi positions across multiple blockchains. Real-time yield tracking, impermanent loss calculation, and automated rebalancing.</p>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap;">
+                        <span style="background: var(--hot-pink); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">React</span>
+                        <span style="background: var(--electric-purple); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Web3</span>
+                        <span style="background: var(--lime-green); color: var(--deep-black); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">DeFi</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Quantum Portfolio Optimizer</h3>
+                    <p style="opacity: 0.9; margin-top: 0.5rem;">Next-gen asset allocation system</p>
+                </div>
+                <div class="project-body">
+                    <p>Quantum-inspired optimization algorithms for portfolio rebalancing. Processes millions of scenarios to find optimal asset allocations in real-time.</p>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap;">
+                        <span style="background: var(--neon-cyan); color: var(--deep-black); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Quantum</span>
+                        <span style="background: var(--electric-purple); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Algorithms</span>
+                        <span style="background: var(--hot-pink); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Finance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="fade-in">
+        <h2 class="section-title">Initialize Connection</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+            <div class="holo-card">
+                <h3 style="color: var(--neon-cyan); margin-bottom: 2rem;">Contact Protocols</h3>
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-envelope" style="color: var(--electric-purple); font-size: 1.5rem;"></i>
+                        <span>hussein@codexcapital.dev</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-terminal" style="color: var(--lime-green); font-size: 1.5rem;"></i>
+                        <span>github.com/hussein-codex</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fab fa-linkedin" style="color: var(--neon-cyan); font-size: 1.5rem;"></i>
+                        <span>linkedin.com/in/hussein-fintech</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-map-marker-alt" style="color: var(--hot-pink); font-size: 1
