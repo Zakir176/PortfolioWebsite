@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zakir Motala - Quantum Designer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Holographic Cursor */
+        .holo-cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.8), rgba(0, 191, 255, 0.8), rgba(255, 20, 147, 0.8));
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: screen;
+            filter: blur(1px);
+            animation: cursorPulse 2s infinite;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes cursorPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; }
+        }
+
+        /* Animated Holographic Background */
+        .holo-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 191, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 20, 147, 0.1) 0%, transparent 50%);
+            animation: holoShift 8s ease-in-out infinite;
+            z-index: -2;
+        }
+
+        @keyframes holoShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            33% { transform: rotate(120deg) scale(1.1); }
+            66% { transform: rotate(240deg) scale(0.9); }
+        }
+
+        /* Scanning Lines */
+        .scan-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 255, 0.03) 2px,
+                rgba(0, 255, 255, 0.03) 4px
+            );
+            z-index: -1;
+            animation: scanMove 3s linear infinite;
+        }
+
+        @keyframes scanMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 15px 30px;
+        }
+
+        .nav-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 500;
+            position: relative;
+            padding: 10px 15px;
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, #8a2be2, #00bfff, #ff1493);
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .nav-links a:hover::before {
+            opacity: 0.2;
+        }
+
+        .nav-links a:hover {
+            color: #00bfff;
+            text-shadow: 0 0 20px rgba(0, 191, 255, 0.6);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 0 20px;
+            z-index: 10;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 200;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #8a2be2, #00bfff, #ff1493, #8a2be2);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientFlow 4s ease-in-out infinite;
+            letter-spacing: -0.02em;
+        }
+
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.4em;
+            font-weight: 300;
+            opacity: 0.8;
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            padding: 18px 36px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .hero-cta:hover::before {
+            left: 100%;
+        }
+
+        .hero-cta:hover {
+            border-color: #00bfff;
+            box-shadow: 0 0 30px rgba(0, 191, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Holographic Orbs */
+        .holo-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), transparent);
+            filter: blur(1px);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .orb1 {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 10%;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.3), transparent);
+            animation-delay: -2s;
+        }
+
+        .orb2 {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 15%;
+            background: radial-gradient(circle, rgba(0, 191, 255, 0.3), transparent);
+            animation-delay: -4s;
+        }
+
+        .orb3 {
+            width: 80px;
+            height: 80px;
+            top: 80%;
+            left: 20%;
+            background: radial-gradient(circle, rgba(255, 20, 147, 0.3), transparent);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Sections */
+        .section {
+            padding: 120px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 3em;
+            font-weight: 200;
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, #8a2be2, #00bfff);
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.2em;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .about-visual {
+            height: 400px;
+            background: linear-gradient(45deg, rgba(138, 43, 226, 0.1), rgba(0, 191, 255, 0.1));
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .about-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(138, 43, 226, 0.2), transparent, rgba(0, 191, 255, 0.2), transparent);
+            animation: visualSpin 10s linear infinite;
+        }
+
+        @keyframes visualSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .skill-item {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #8a2be2, #00bfff, #ff1493);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .skill-item:hover::before {
+            transform: translateX(0);
+        }
+
+        .skill-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.1);
+            border-color: rgba(138, 43, 226, 0.3);
+        }
+
+        .skill-icon {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .skill-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #00bfff;
+        }
+
+        .skill-desc {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+        }
+
+        .project-card {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.05), rgba(0, 191, 255, 0.05));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            border-color: rgba(138, 43, 226, 0.3);
+        }
+
+        .project-header {
+            height: 250px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(138, 43, 226, 0.1), transparent);
+            animation: projectGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes projectGlow {
+            0%, 100% { transform: rotate(0deg) scale(1); opacity: 0.5; }
+            50% { transform: rotate(180deg) scale(1.1); opacity: 1; }
+        }
+
+        .project-content {
+            padding: 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .project-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .project-desc {
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .project-tag {
+            background: rgba(138, 43, 226, 0.2);
+            color: #8a2be2;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-text {
+            font-size: 1.3em;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 50px;
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .contact-method {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: #fff;
+            min-width: 150px;
+        }
+
+        .contact-method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(138, 43, 226, 0.2);
+            border-color: rgba(138, 43, 226, 0.4);
+        }
+
+        .contact-icon {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .contact-label {
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            opacity: 0.6;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 100px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                gap: 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .contact-methods {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="holo-cursor"></div>
+    <div class="holo-bg"></div>
+    <div class="scan-lines"></div>
+
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="holo-orb orb1"></div>
+        <div class="holo-orb orb2"></div>
+        <div class="holo-orb orb3"></div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Zakir Motala</h1>
+            <p class="hero-subtitle">Quantum Designer & Holographic Interface Architect<br>
+            Crafting immersive digital experiences that blur the line between reality and virtuality</p>
+            <a href="#projects" class="hero-cta">Explore Portfolio →</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2 class="section-title">About</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>I'm a visionary designer specializing in quantum interfaces and holographic experiences. With over 8 years of experience in cutting-edge technology, I create digital solutions that transcend traditional boundaries.</p>
+                
+                <p>My work focuses on the intersection of quantum computing, spatial design, and human-computer interaction, developing interfaces that adapt to users' thoughts and emotions in real-time.</p>
+                
+                <p>Currently leading the UX team at QuantumFlow Labs, where we're building the next generation of consciousness-driven applications.</p>
+            </div>
+            <div class="about-visual"><img src="images/Profile.jpg" alt="Zakir Motala" style="border-radius: 10px; max-width: fit-content; height: 100%;"></div>
+        </div>
+    </section>
+
+    <section id="skills" class="section">
+        <h2 class="section-title">Expertise</h2>
+        <div class="skills-container">
+            <div class="skill-item">
+                <span class="skill-icon">🧬</span>
+                <h3 class="skill-title">Quantum UX Design</h3>
+                <p class="skill-desc">Designing interfaces that exist in quantum superposition, adapting based on user consciousness and intent prediction algorithms.</p>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">🌐</span>
+                <h3 class="skill-title">Holographic Interfaces</h3>
+                <p class="skill-desc">Creating three-dimensional interactive experiences using spatial computing and advanced projection mapping techniques.</p>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">🧠</span>
+                <h3 class="skill-title">Neural Integration</h3>
+                <p class="skill-desc">Developing brain-computer interfaces that respond to neural patterns, enabling thought-based navigation and control.</p>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">⚡</span>
+                <h3 class="skill-title">Biometric Adaptation</h3>
+                <p class="skill-desc">Implementing real-time biometric feedback systems that adjust interface elements based on user emotional state and stress levels.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-header">🌀</div>
+                <div class="project-content">
+                    <h3 class="project-title">Quantum Dashboard</h3>
+                    <p class="project-desc">A consciousness-driven control panel that adapts its layout and functionality based on the user's mental state and task requirements.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Quantum Computing</span>
+                        <span class="project-tag">Neural Networks</span>
+                        <span class="project-tag">WebXR</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-header">🌌</div>
+                <div class="project-content">
+                    <h3 class="project-title">Holographic Workspace</h3>
+                    <p class="project-desc">A collaborative 3D environment where teams can interact with data and each other through volumetric projections and spatial audio.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Three.js</span>
+                        <span class="project-tag">WebRTC</span>
+                        <span class="project-tag">Spatial Audio</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-header">🔮</div>
+                <div class="project-content">
+                    <h3 class="project-title">Emotion-Responsive UI</h3>
+                    <p class="project-desc">An adaptive interface system that changes color schemes, layouts, and interactions based on real-time emotion detection from facial expressions.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Computer Vision</span>
+                        <span class="project-tag">Machine Learning</span>
+                        <span class="project-tag">Real-time Processing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="section-title">Connect</h2>
+        <div class="contact-content">
+            <p class="contact-text">Ready to explore the future of digital interaction? Let's collaborate on projects that push the boundaries of what's possible in quantum design and holographic experiences.</p>
+            <div class="contact-methods">
+                <a href="mailto:zakirhusseinmotala76@gmail.com" class="contact-method">
+                    <span class="contact-icon">📧</span>
+                    <span class="contact-label">Email</span>
+                </a>
+                <a href="#" class="contact-method">
+                    <span class="contact-icon">🔗</span>
+                    <span class="contact-label">LinkedIn</span>
+                </a>
+                <a href="#" class="contact-method">
+                    <span class="contact-icon">🐙</span>
+                    <span class="contact-label">GitHub</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Zakir Motala - Quantum Designer | Shaping Tomorrow's Interfaces</p>
+    </footer>
+
+    <script>
+        // Holographic cursor
+        const cursor = document.querySelector('.holo-cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) scale(1)';
+                }
+            });
+        }, observerOptions);
+
+        // Animate elements on scroll
+        document.querySelectorAll('.skill-item, .project-card, .about-visual').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px) scale(0.95)';
+            el.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(el);
+        });
+
+        // Interactive hover effects
+        document.querySelectorAll('.skill-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) rotateX(5deg)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) rotateX(0deg)';
+            });
+        });
+
+        // Dynamic color shifting
+        let colorShift = 0;
+        function updateColors() {
+            colorShift += 0.5;
+            const hue1 = (270 + colorShift) % 360;
+            const hue2 = (195 + colorShift) % 360;
+            const hue3 = (330 + colorShift) % 360;
+            
+            document.documentElement.style.setProperty('--primary-hue', hue1);
+            document.documentElement.style.setProperty('--secondary-hue', hue2);
+            document.documentElement.style.setProperty('--accent-hue', hue3);
+        }
+        setInterval(updateColors, 100);
+
+        // Parallax effect for orbs
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            document.querySelectorAll('.holo-orb').forEach((orb, index) => {
+                const speed = (index + 1) * 0.1;
+                const x = mouseX * 20 * speed;
+                const y = mouseY * 20 * speed;
+                orb.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Text reveal animation for hero
+        const heroTitle = document.querySelector('.hero-title');
+        const heroSubtitle = document.querySelector('.hero-subtitle');
+        
+        setTimeout(() => {
+            heroTitle.style.animation = 'gradientFlow 4s ease-in-out infinite, fadeInUp 1s ease-out forwards';
+            heroSubtitle.style.animation = 'fadeInUp 1s ease-out 0.3s forwards';
+        }, 500);
+
+        // Add fadeInUp keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initial states
+        heroTitle.style.opacity = '0';
+        heroSubtitle.style.opacity = '0';
