@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - CS Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(120deg, #0a0a0a 60%, #002b36 100%);
+            color: #fff;
+            overflow-x: hidden;
+            cursor: none;
+        }
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00ff88;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transition: all 0.1s cubic-bezier(.4,2,.6,1);
+            mix-blend-mode: difference;
+        }
+        .cursor.hover {
+            transform: scale(2.2);
+            background: rgba(0,255,136,0.18);
+        }
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 18px 40px;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,255,136,0.13);
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #00ff88;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.08rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: #00ff88;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 0;
+            width: 0; height: 2px;
+            background: #00ff88;
+            transition: width 0.3s;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        #three-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            z-index: -1;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+            padding-top: 110px;
+        }
+        .section {
+            min-height: 100vh;
+            padding: 90px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero {
+            text-align: center;
+            background: rgba(10, 10, 10, 0.78);
+            backdrop-filter: blur(7px);
+            border-radius: 22px;
+            padding: 70px 30px 60px 30px;
+            border: 1px solid rgba(0,255,136,0.22);
+            box-shadow: 0 8px 40px 0 rgba(0,255,136,0.06);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .hero-image {
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 28px;
+            border: 3px solid #00ff88;
+            box-shadow: 0 0 0 4px rgba(0,255,136,0.08);
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            background: linear-gradient(135deg, #00ff88, #00b8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(0,255,136,0.22)); }
+            to { filter: drop-shadow(0 0 32px rgba(0,255,136,0.38)); }
+        }
+        .hero .subtitle {
+            font-size: 1.35rem;
+            margin-bottom: 22px;
+            color: #b0f5d6;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .hero .description {
+            font-size: 1.13rem;
+            line-height: 1.7;
+            max-width: 540px;
+            margin: 0 auto 36px;
+            color: #e0ffe7;
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 14px 38px;
+            background: linear-gradient(135deg, #00ff88, #00b8ff);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+            box-shadow: 0 4px 24px 0 rgba(0,255,136,0.13);
+        }
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 10px 30px rgba(0,255,136,0.22);
+        }
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+            transition: left 0.5s;
+        }
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        .terminal {
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 18px;
+            margin: 18px 0 0 0;
+            font-family: 'JetBrains Mono', monospace;
+            border: 1px solid rgba(0,255,136,0.22);
+            box-shadow: 0 2px 16px 0 rgba(0,255,136,0.07);
+        }
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27ca3f; }
+        .terminal-content { color: #00ff88; }
+        .typing-text {
+            overflow: hidden;
+            border-right: 2px solid #00ff88;
+            animation: typing 3s steps(40) infinite, blink 1s infinite;
+            white-space: nowrap;
+        }
+        @keyframes typing {
+            0% { width: 0; }
+            50% { width: 100%; }
+            100% { width: 0; }
+        }
+        @keyframes blink { 50% { border-color: transparent; } }
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title {
+            font-size: 2.3rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            background: linear-gradient(135deg, #00ff88, #00b8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .section-subtitle {
+            font-size: 1.08rem;
+            color: #b0b0b0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 28px;
+            width: 100%;
+        }
+        .skill-card {
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 32px;
+            border: 1px solid rgba(0,255,136,0.17);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 16px 0 rgba(0,255,136,0.06);
+        }
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00ff88, #00b8ff);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        .skill-card:hover::before { transform: scaleX(1); }
+        .skill-card:hover {
+            transform: translateY(-7px) scale(1.03);
+            border-color: rgba(0,255,136,0.33);
+            box-shadow: 0 10px 30px rgba(0,255,136,0.13);
+        }
+        .skill-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: #00ff88;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .skill-card .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .tech-tag {
+            background: rgba(0,255,136,0.13);
+            color: #00ff88;
+            padding: 5px 13px;
+            border-radius: 20px;
+            font-size: 0.93rem;
+            border: 1px solid rgba(0,255,136,0.22);
+        }
+        .projects-container { width: 100%; }
+        .project-card {
+            background: rgba(20, 20, 20, 0.93);
+            backdrop-filter: blur(10px);
+            border-radius: 18px;
+            padding: 32px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(0,255,136,0.16);
+            transition: all 0.3s;
+            position: relative;
+            box-shadow: 0 2px 16px 0 rgba(0,255,136,0.07);
+        }
+        .project-card:hover {
+            transform: scale(1.018);
+            border-color: rgba(0,255,136,0.33);
+            box-shadow: 0 10px 30px rgba(0,255,136,0.13);
+        }
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+        .project-title {
+            font-size: 1.45rem;
+            font-weight: 600;
+            color: #00ff88;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .project-links {
+            display: flex;
+            gap: 13px;
+        }
+        .project-link {
+            color: #00b8ff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .project-link:hover { color: #00ff88; }
+        @media (max-width: 900px) {
+            .section { padding: 50px 10px; }
+            .hero { padding: 30px 10px; }
+            .hero h1 { font-size: 2.1rem; }
+            .section-title { font-size: 1.3rem; }
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+        .loading-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s;
+        }
+        .loader {
+            width: 50px; height: 50px;
+            border: 3px solid rgba(0,255,136,0.22);
+            border-top: 3px solid #00ff88;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader"></div>
+    </div>
+    <div class="cursor" id="cursor"></div>
+    <nav>
+        <div class="nav-container">
+            <a href="#home" class="logo">AC.dev</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <canvas id="three-canvas"></canvas>
+    <div class="content">
+        <section id="home" class="section">
+            <div class="hero">
+                <img src="images/Profile.jpg" alt="Alex Chen" class="hero-image">
+                <h1>Alex Chen</h1>
+                <p class="subtitle">Computer Science Student &amp; Developer</p>
+                <p class="description">
+                    Passionate about creating innovative solutions through code.<br>
+                    Specializing in full-stack development, machine learning, and 3D graphics.<br>
+                    Always eager to learn and tackle new challenges.
+                </p>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot dot-red"></div>
+                        <div class="terminal-dot dot-yellow"></div>
+                        <div class="terminal-dot dot-green"></div>
+                    </div>
+                    <div class="terminal-content">
+                        <div class="typing-text">$ echo "Hello, World! Welcome to my portfolio"</div>
+                    </div>
+                </div>
+                <a href="#projects" class="cta-button">View My Work</a>
+            </div>
+        </section>
+        <section id="skills" class="section">
+            <div class="skills-container">
+                <div class="section-header">
+                    <h2 class="section-title">Skills &amp; Technologies</h2>
+                    <p class="section-subtitle">
+                        A comprehensive toolkit for modern software development
+                    </p>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <h3>Frontend Development</h3>
+                        <p>Creating responsive and interactive user interfaces with modern frameworks and libraries.</p>
+                        <div class="tech-list">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Vue.js</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">Three.js</span>
+                            <span class="tech-tag">SCSS</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Backend Development</h3>
+                        <p>Building scalable server-side applications and RESTful APIs with robust architecture.</p>
+                        <div class="tech-list">
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Express</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Machine Learning</h3>
+                        <p>Developing intelligent systems using various ML algorithms and deep learning frameworks.</p>
+                        <div class="tech-list">
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">PyTorch</span>
+                            <span class="tech-tag">Scikit-learn</span>
+                            <span class="tech-tag">Pandas</span>
+                            <span class="tech-tag">NumPy</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <h3>DevOps &amp; Tools</h3>
+                        <p>Streamlining development workflows with modern tools and deployment strategies.</p>
+                        <div class="tech-list">
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">Git</span>
+                            <span class="tech-tag">AWS</span>
+                            <span class="tech-tag">CI/CD</span>
+                            <span class="tech-tag">Linux</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="projects" class="section">
+            <div class="projects-container">
+                <div class="section-header">
+                    <h2 class="section-title">Featured Projects</h2>
+                    <p class="section-subtitle">
+                        A selection of my recent work and contributions
+                    </p>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">AI-Powered Code Assistant</h3>
+                        <div class="project-links">
+                            <a href="#" class="project-link">Live Demo</a>
+                            <a href="#" class="project-link">GitHub</a>
+                        </div>
+                    </div>
+                    <p>A machine learning model that helps developers write better code by providing intelligent suggestions and detecting potential bugs. Built with Python, TensorFlow, and integrated with VS Code.</p>
+                    <div class="tech-list">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">TensorFlow</span>
+                        <span class="tech-tag">NLP</span>
+                        <span class="tech-tag">VS Code API</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">3D Data Visualization Platform</h3>
+                        <div class="project-links">
+                            <a href="#" class="project-link">Live Demo</a>
+                            <a href="#" class="project-link">GitHub</a>
+                        </div>
+                    </div>
+                    <p>An interactive web application for visualizing complex datasets in 3D space. Features real-time data processing, WebGL rendering, and intuitive user controls for data exploration.</p>
+                    <div class="tech-list">
+                        <span class="tech-tag">Three.js</span>
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">D3.js</span>
+                        <span class="tech-tag">WebGL</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Distributed Chat Application</h3>
+                        <div class="project-links">
+                            <a href="#" class="project-link">Live Demo</a>
+                            <a href="#" class="project-link">GitHub</a>
+                        </div>
+                    </div>
+                    <p>A scalable real-time chat application supporting thousands of concurrent users. Implements microservices architecture with message queuing and horizontal scaling capabilities.</p>
+                    <div class="tech-list">
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Socket.io</span>
+                        <span class="tech-tag">Redis</span>
+                        <span class="tech-tag">Docker</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="contact" class="section">
+            <div class="skills-container">
+                <div class="section-header">
+                    <h2 class="section-title">Contact</h2>
+                    <p class="section-subtitle">
+                        Interested in collaborating or have a question? Reach out!
+                    </p>
+                </div>
+                <form style="max-width:400px;margin:0 auto;text-align:left;">
+                    <label for="name" style="display:block;margin-bottom:8px;">Name</label>
+                    <input id="name" name="name" type="text" required style="width:100%;padding:10px;border-radius:6px;border:1px solid #00ff88;margin-bottom:16px;">
+                    <label for="email" style="display:block;margin-bottom:8px;">Email</label>
+                    <input id="email" name="email" type="email" required style="width:100%;padding:10px;border-radius:6px;border:1px solid #00ff88;margin-bottom:16px;">
+                    <label for="message" style="display:block;margin-bottom:8px;">Message</label>
+                    <textarea id="message" name="message" rows="4" required style="width:100%;padding:10px;border-radius:6px;border:1px solid #00ff88;margin-bottom:18px;"></textarea>
+                    <button type="submit" class="cta-button" style="width:100%;">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Custom cursor
+        const cursor = document.getElementById('cursor');
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX - 10 + 'px';
+            cursor.style.top = mouseY - 10 + 'px';
+        });
+        // Hover effects for cursor
+        const hoverElements = document.querySelectorAll('a, button, .skill-card, .project-card');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+        // Three.js Scene Setup
+        let scene, camera, renderer, particleSystem;
+        let mouseXNorm = 0, mouseYNorm = 0;
+        function initThree() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ 
+                canvas: document.getElementById('three-canvas'),
+                alpha: true,
+                antialias: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+            createParticleSystem();
+            createFloatingShapes();
+            camera.position.z = 5;
+            animate();
+        }
+        function createParticleSystem() {
+            const particleCount = 1800;
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            for (let i = 0; i < particleCount; i++) {
+                positions[i * 3] = (Math.random() - 0.5) * 50;
+                positions[i * 3 + 1] = (Math.random() - 0.5) * 50;
+                positions[i * 3 + 2] = (Math.random() - 0.5) * 50;
+                colors[i * 3] = 0;
+                colors[i * 3 + 1] = Math.random() * 0.5 + 0.5;
+                colors[i * 3 + 2] = Math.random() * 0.5 + 0.5;
+            }
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            const material = new THREE.PointsMaterial({
+                size: 2,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8
+            });
+            particleSystem = new THREE.Points(geometry, material);
+            scene.add(particleSystem);
+        }
+        function createFloatingShapes() {
+            const shapes = [];
+            const torusGeometry = new THREE.TorusGeometry(1, 0.3, 16, 100);
+            const torusMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x00ff88, wireframe: true, transparent: true, opacity: 0.3
+            });
+            const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+            torus.position.set(-8, 5, -10);
+            scene.add(torus); shapes.push(torus);
+            const icoGeometry = new THREE.IcosahedronGeometry(1.5, 1);
+            const icoMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x00b8ff, wireframe: true, transparent: true, opacity: 0.4
+            });
+            const icosahedron = new THREE.Mesh(icoGeometry, icoMaterial);
+            icosahedron.position.set(8, -3, -15);
+            scene.add(icosahedron); shapes.push(icosahedron);
+            const octaGeometry = new THREE.OctahedronGeometry(1.2);
+            const octaMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x88ff00, wireframe: true, transparent: true, opacity: 0.35
+            });
+            const octahedron = new THREE.Mesh(octaGeometry, octaMaterial);
+            octahedron.position.set(-5, -8, -12);
+            scene.add(octahedron); shapes.push(octahedron);
+            window.floatingShapes = shapes;
+        }
+        function animate() {
+            requestAnimationFrame(animate);
+            if (particleSystem) {
+                particleSystem.rotation.x += 0.001;
+                particleSystem.rotation.y += 0.002;
+                particleSystem.rotation.x += mouseYNorm * 0.0005;
+                particleSystem.rotation.y += mouseXNorm * 0.0005;
+            }
+            if (window.floatingShapes) {
+                window.floatingShapes.forEach((shape, index) => {
+                    shape.rotation.x += 0.01 + index * 0.002;
+                    shape.rotation.y += 0.015 + index * 0.001;
+                    shape.rotation.z += 0.005 + index * 0.003;
+                    shape.position.y += Math.sin(Date.now() * 0.001 + index) * 0.01;
+                });
+            }
+            renderer.render(scene, camera);
+        }
+        document.addEventListener('mousemove', (event) => {
+            mouseXNorm = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseYNorm = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.skill-card, .project-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px)';
+            el.style.transition = 'opacity 0.6s, transform 0.6s';
+            observer.observe(el);
+        });
+        window.addEventListener('load', () => {
+            const loadingScreen = document.getElementById('loadingScreen');
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 900);
+            initThree();
+        });
+        // Terminal typing animation
+        const typingText = document.querySelector('.typing-text');
+        const messages = [
+            '$ echo "Hello, World! Welcome to my portfolio"',
+            '$ ls skills/',
+            '$ cat about.txt',
+            '$ git status',
+            '$ npm run build'
+        ];
+        let messageIndex = 0;
+        function changeTypingText() {
+            typingText.textContent = messages[messageIndex];
+            messageIndex = (messageIndex + 1) % messages.length;
+        }
+        setInterval(changeTypingText, 4000);
+        // Parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            if (particleSystem) {
+                particleSystem.position.y = rate;
+            }
+        });
+    </script>
+</body>
+</html>
