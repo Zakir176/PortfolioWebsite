@@ -20,18 +20,24 @@
         }
 
         /* Holographic Cursor */
-        .holo-cursor {
+
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00d4ff;
+            border-radius: 50%;
             position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor.hover {
             width: 40px;
             height: 40px;
-            background: radial-gradient(circle, rgba(138, 43, 226, 0.8), rgba(0, 191, 255, 0.8), rgba(255, 20, 147, 0.8));
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            mix-blend-mode: screen;
-            filter: blur(1px);
-            animation: cursorPulse 2s infinite;
-            transform: translate(-50%, -50%);
+            background: rgba(0, 212, 255, 0.2);
         }
 
         @keyframes cursorPulse {
@@ -385,6 +391,20 @@
             opacity: 0.8;
             line-height: 1.6;
         }
+        .skill-card .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .tech-tag {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00bfff;
+            padding: 5px 13px;
+            border-radius: 20px;
+            font-size: 0.93rem;
+            border: 1px solid rgba(0,255,136,0.22);
+        }
 
         /* Projects Section */
         .projects-grid {
@@ -598,7 +618,7 @@
         
         <div class="hero-content">
             <h1 class="hero-title">Zakir Motala</h1>
-            <p class="hero-subtitle">Quantum Designer & Holographic Interface Architect<br>
+            <p class="hero-subtitle">computer enthusiast and programmer<br>
             Crafting immersive digital experiences that blur the line between reality and virtuality</p>
             <a href="#projects" class="hero-cta">Explore Portfolio →</a>
         </div>
@@ -608,41 +628,60 @@
         <h2 class="section-title">About</h2>
         <div class="about-content">
             <div class="about-text">
-                <p>I'm a visionary designer specializing in quantum interfaces and holographic experiences. With over 8 years of experience in cutting-edge technology, I create digital solutions that transcend traditional boundaries.</p>
+                <p>I'm a visionary designer specializing in web programming interfaces and proffesional experiences. With over 4 years of experience in cutting-edge technology, I create digital solutions that transcend traditional boundaries.</p>
                 
-                <p>My work focuses on the intersection of quantum computing, spatial design, and human-computer interaction, developing interfaces that adapt to users' thoughts and emotions in real-time.</p>
+                <p>A passionate and innovative 17-year-old programmer with 4 years of hands-on experience in software development. Started programming at the age of 13 and quickly advanced in multiple technologies. Adept at full-stack development, mobile apps with .NET MAUI, and building web platforms. </p>
                 
-                <p>Currently leading the UX team at QuantumFlow Labs, where we're building the next generation of consciousness-driven applications.</p>
+                <p>Currently leading persuing my bachelor's degree at the Copperbelt university </p>
             </div>
             <div class="about-visual"><img src="images/Profile.jpg" alt="Zakir Motala" style="border-radius: 10px; max-width: fit-content; height: 100%;"></div>
         </div>
     </section>
-
-    <section id="skills" class="section">
-        <h2 class="section-title">Expertise</h2>
+<section id="skills" class="section">
+        <h2>Skills & Expertise</h2>
         <div class="skills-container">
             <div class="skill-item">
-                <span class="skill-icon">🧬</span>
-                <h3 class="skill-title">Quantum UX Design</h3>
-                <p class="skill-desc">Designing interfaces that exist in quantum superposition, adapting based on user consciousness and intent prediction algorithms.</p>
+                <div class="skill-icon">⚛️</div>
+                <h3>Frontend Development</h3>
+                <p>Creating responsive and interactive user interfaces with modern frameworks and libraries.</p>
+                <div class="tech-list">
+                        <span class="tech-tag">.NET MAUI</span>
+                        <span class="tech-tag">c++</span>
+                        <span class="tech-tag">Vue.js</span>
+                </div>
             </div>
             <div class="skill-item">
-                <span class="skill-icon">🌐</span>
-                <h3 class="skill-title">Holographic Interfaces</h3>
-                <p class="skill-desc">Creating three-dimensional interactive experiences using spatial computing and advanced projection mapping techniques.</p>
+                <div class="skill-icon">🚀</div>
+                <h3>Backend Development</h3>
+                <p>Building scalable server-side applications and RESTful APIs with robust architecture.</p>
+                <div class="tech-list">
+                        <span class="tech-tag">PHP</span>
+                        <span class="tech-tag">SQL</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">API's</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                </div>
             </div>
             <div class="skill-item">
-                <span class="skill-icon">🧠</span>
-                <h3 class="skill-title">Neural Integration</h3>
-                <p class="skill-desc">Developing brain-computer interfaces that respond to neural patterns, enabling thought-based navigation and control.</p>
+                <div class="skill-icon">🎨</div>
+                <h3>UI/UX Design</h3>
+                <p>Figma, Canva, CSS</p>
+                <div class="tech-list">
+                        <span class="tech-tag">PHP</span>
+                        <span class="tech-tag">SQL</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">API's</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                </div>
             </div>
-            <div class="skill-item">
-                <span class="skill-icon">⚡</span>
-                <h3 class="skill-title">Biometric Adaptation</h3>
-                <p class="skill-desc">Implementing real-time biometric feedback systems that adjust interface elements based on user emotional state and stress levels.</p>
-            </div>
+            <!-- <div class="skill-item">
+                <div class="skill-icon">🔗</div>
+                <h3>Blockchain</h3>
+                <p>Ethereum, Web3.js, Smart Contracts</p>
+            </div> -->
         </div>
     </section>
+
 
     <section id="projects" class="section">
         <h2 class="section-title">Projects</h2>
@@ -699,7 +738,7 @@
                     <span class="contact-icon">🔗</span>
                     <span class="contact-label">LinkedIn</span>
                 </a>
-                <a href="#" class="contact-method">
+                <a href="github.com/Zakir176" class="contact-method">
                     <span class="contact-icon">🐙</span>
                     <span class="contact-label">GitHub</span>
                 </a>
@@ -712,24 +751,39 @@
     </footer>
 
     <script>
-        // Holographic cursor
-        const cursor = document.querySelector('.holo-cursor');
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
+               // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const links = document.querySelectorAll('a, button, .project-card, .skill-item');
 
         document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
         });
 
-        function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.1;
-            cursorY += (mouseY - cursorY) * 0.1;
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            link.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+       
+       
+       // // Holographic cursor
+        // const cursor = document.querySelector('.holo-cursor');
+        // let mouseX = 0, mouseY = 0;
+        // let cursorX = 0, cursorY = 0;
+
+        // document.addEventListener('mousemove', (e) => {
+        //     mouseX = e.clientX;
+        //     mouseY = e.clientY;
+        // });
+
+        // function animateCursor() {
+        //     cursorX += (mouseX - cursorX) * 0.1;
+        //     cursorY += (mouseY - cursorY) * 0.1;
+        //     cursor.style.left = cursorX + 'px';
+        //     cursor.style.top = cursorY + 'px';
+        //     requestAnimationFrame(animateCursor);
+        // }
+        // animateCursor();
 
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
