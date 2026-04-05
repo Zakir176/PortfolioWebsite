@@ -114,7 +114,7 @@
         });
 
         // Animate elements on scroll with staggered delays
-        const animatedElements = document.querySelectorAll('.skill-item, .project-card, .section-title, .about-text, .about-visual, .contact-content');
+        const animatedElements = document.querySelectorAll('.highlight-card, .experience-card, .speaking-item, .skill-item, .project-card, .section-title, .about-text, .about-visual, .contact-content');
         animatedElements.forEach((element, index) => {
             element.style.opacity = '0';
             element.style.transform = 'translateY(30px)';
@@ -127,6 +127,7 @@
             const heroTitle = document.querySelector('.hero-title');
             const heroSubtitle = document.querySelector('.hero-subtitle');
             const heroDescription = document.querySelector('.hero-description');
+            const heroFinalTouch = document.querySelector('.hero-final-touch');
             const heroCtas = document.querySelectorAll('.hero-cta');
 
             setTimeout(() => {
@@ -142,12 +143,16 @@
             }, 900);
 
             setTimeout(() => {
+                if (heroFinalTouch) heroFinalTouch.classList.add('animate');
+            }, 1200);
+
+            setTimeout(() => {
                 heroCtas.forEach((cta, index) => {
                     setTimeout(() => {
                         cta.style.animation = 'fadeInUp 1s ease-out forwards';
                     }, index * 200);
                 });
-            }, 1200);
+            }, 1500);
         }
 
         // Enhanced parallax effect with performance optimization
