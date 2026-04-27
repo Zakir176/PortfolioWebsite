@@ -15,402 +15,311 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="cursor"></div>
-    <div class="background-layers"></div>
-    <div class="scan-lines"></div>
+    <div class="main-frame">
+        <!-- Background Accents -->
+        <div class="aura-blob aura-1"></div>
+        <div class="aura-blob aura-2"></div>
 
-    <nav id="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">ZM<span class="logo-dot">.</span></div>
-            <button class="mobile-menu-toggle" aria-label="Toggle menu">
-                <span class="menu-bar"></span>
-                <span class="menu-bar"></span>
-            </button>
+        <!-- Navigation -->
+        <nav>
+            <div class="nav-logo">Zakir Motala<span class="text-gradient">.</span></div>
             <ul class="nav-links">
                 <li><a href="#home" class="nav-link">HOME</a></li>
                 <li><a href="#projects" class="nav-link">PROJECTS</a></li>
-                <li><a href="#skills" class="nav-link">SKILLS</a></li>
+                <li><a href="#services" class="nav-link">SKILLS</a></li>
+                <li><a href="#experience" class="nav-link">EXPERIENCE</a></li>
                 <li><a href="#about" class="nav-link">ABOUT</a></li>
-                <li><a href="#contact" class="nav-link" data-premium="true">LET'S TALK</a></li>
+                <li><a href="#contact" class="nav-link" style="color: white; font-weight: 700;">LET'S TALK</a></li>
             </ul>
-        </div>
-    </nav>
+        </nav>
 
-    <section id="home" class="hero">
-        <div class="hero-background">
-            <div class="holo-orb orb1"></div>
-            <div class="holo-orb orb2"></div>
-            <div class="holo-orb orb3"></div>
-        </div>
-        
-        <div class="hero-content">
-            <div class="hero-eyebrow">Systems Architect & Developer</div>
-            <h1 class="hero-title" data-scramble="true">Architecting Resilient Systems, Scaling Innovation</h1>
-            <p class="hero-subtitle">Speaker · Intern @ Uniplexity AI · Open Source Contributor</p>
-            <div class="hero-description-container">
-                <p class="hero-description">I design and build real-world systems — from fintech platforms to media tools — with a focus on scalability, clean architecture, and practical impact.</p>
-            </div>
-            <div class="hero-cta-group">
-                <a href="#projects" class="hero-cta primary">
-                    <span class="cta-text">Explore Systems</span>
-                    <span class="cta-arrow">→</span>
-                </a>
-                <a href="#contact" class="hero-cta secondary">Get in Touch</a>
-                <div class="hero-socials">
-                    <a href="https://github.com/Zakir176" class="social-icon" target="_blank" aria-label="GitHub">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <span class="hero-eyebrow">Systems Architect & Developer</span>
+                <h1 class="hero-title">
+                    I Build <span class="text-gradient">Resilient</span> Systems <br> that Scale.
+                </h1>
+                <p style="color: var(--text-gray); font-size: 1.25rem; margin-bottom: 50px; line-height: 1.6;">
+                    Speaker · Intern @ Uniplexity AI · Open Source Contributor <br> 
+                    Focused on .NET Core, Vue.js, and Infrastructure.
+                </p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn-grad">View Case Studies</a>
+                    <a href="https://github.com/Zakir176" target="_blank" class="nav-link" style="margin-left: 20px; display: inline-flex; align-items: center; gap: 8px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        GitHub
                     </a>
                 </div>
             </div>
+            <div class="hero-image-container">
+                <img src="images/Profile.jpg" alt="Zakir Motala" class="hero-image">
+            </div>
+        </section>
+
+        <!-- Signature Marquee -->
+        <div class="marquee-container">
+            <div class="marquee-content">
+                <div class="marquee-item"><span class="marquee-dot"></span> FULL-STACK DEVELOPMENT</div>
+                <div class="marquee-item"><span class="marquee-dot"></span> SYSTEMS ARCHITECTURE</div>
+                <div class="marquee-item"><span class="marquee-dot"></span> AI MODULE INTEGRATION</div>
+                <div class="marquee-item"><span class="marquee-dot"></span> OPEN SOURCE CONTRIBUTOR</div>
+                <!-- Duplicate for seamless scroll -->
+                <div class="marquee-item"><span class="marquee-dot"></span> FULL-STACK DEVELOPMENT</div>
+                <div class="marquee-item"><span class="marquee-dot"></span> SYSTEMS ARCHITECTURE</div>
+                <div class="marquee-item"><span class="marquee-dot"></span> AI MODULE INTEGRATION</div>
+                <div class="marquee-item"><span class="marquee-dot"></span> OPEN SOURCE CONTRIBUTOR</div>
+            </div>
         </div>
 
-        <div class="scroll-indicator">
-            <div class="scroll-mouse">
-                <div class="scroll-wheel"></div>
+        <!-- Capabilities Section -->
+        <section id="services" class="services">
+            <span class="section-label">Capabilities</span>
+            <h2 class="section-heading">What I'm <span class="text-gradient">Offering</span>.</h2>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3 class="service-title">Frontend Architecture</h3>
+                    <p class="service-desc">Crafting ultra-responsive, reactive interfaces using Vue 3, Pinia, and modern design systems tailored for performance.</p>
+                    <div class="tech-tags-mini">
+                        <span>Vue 3</span> <span>TypeScript</span> <span>Tailwind</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚙️</div>
+                    <h3 class="service-title">Backend Infrastructure</h3>
+                    <p class="service-desc">Building robust C# .NET Core APIs and PostgreSQL databases designed for high concurrency and institutional scale.</p>
+                    <div class="tech-tags-mini">
+                        <span>.NET Core</span> <span>PostgreSQL</span> <span>REST</span> <span>Git</span> <span>Postman</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3 class="service-title">System Integration</h3>
+                    <p class="service-desc">Merging AI capabilities and ERP modules into cohesive, productive workflows with clean documentation.</p>
+                    <div class="tech-tags-mini">
+                        <span>AI Modules</span> <span>ERP</span> <span>Agile</span>
+                    </div>
+                </div>
             </div>
-            <div class="scroll-text">Scroll to explore</div>
-        </div>
-    </section>
+        </section>
 
-    <section id="highlights" class="section highlights-section">
-        <div class="bento-grid">
-            <div class="bento-item glass large">
-                <div class="highlight-icon m-t-20">💼</div>
-                <h3 class="highlight-title m-t-20" style="font-size: 2rem;">Systems Architect & Intern</h3>
-                <p class="highlight-text m-t-10" style="font-size: 1.1rem;">Uniplexity AI — Building production-scale ERP & AI modules.</p>
+        <!-- Projects Section -->
+        <section id="projects" class="content-section">
+            <span class="section-label">Case Studies</span>
+            <h2 class="section-heading">Featured <span class="text-gradient">Systems</span>.</h2>
+            
+            <div class="noir-projects-grid">
+                <!-- Project 1 -->
+                <div class="noir-project-card">
+                    <div class="noir-project-info">
+                        <span class="project-category">Vue CRUD App</span>
+                        <h3 class="noir-project-title">AlphaJournal</h3>
+                        <p class="noir-project-desc">A modern journal application structured around robust CRUD operations and sleek UI design methodologies.</p>
+                        <div class="noir-project-tags">
+                            <span>Vue.js</span> <span>State Management</span> <span>UI/UX</span>
+                        </div>
+                        <a href="https://github.com/Zakir176/AlphaJournal" target="_blank" class="noir-project-link">View Repository →</a>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="noir-project-card">
+                    <div class="noir-project-info">
+                        <span class="project-category">Media Infrastructure</span>
+                        <h3 class="noir-project-title">StreamOS</h3>
+                        <p class="noir-project-desc">Private media streaming OS with automated indexing and multi-profile isolation.</p>
+                        <div class="noir-project-tags">
+                            <span>Python</span> <span>Vue.js</span> <span>Service-Based</span>
+                        </div>
+                        <a href="https://github.com/Zakir176/StreamOS" target="_blank" class="noir-project-link">View Repository →</a>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="noir-project-card">
+                    <div class="noir-project-info">
+                        <span class="project-category">AI-Powered POS</span>
+                        <h3 class="noir-project-title">UB App</h3>
+                        <p class="noir-project-desc">Smart POS system for ZRA compliance featuring AI-driven invoice support.</p>
+                        <div class="noir-project-tags">
+                            <span>.NET Core</span> <span>C#</span> <span>FinTech</span>
+                        </div>
+                        <a href="http://uniplexitybusiness.com/" target="_blank" class="noir-project-link">Visit Site →</a>
+                    </div>
+                </div>
+                <!-- Project 4 -->
+                <div class="noir-project-card">
+                    <div class="noir-project-info">
+                        <span class="project-category">Real-time Platform</span>
+                        <h3 class="noir-project-title">Aura Vibe</h3>
+                        <p class="noir-project-desc">Collaborative DJ platform with real-time sync and WebSocket-based queue management.</p>
+                        <div class="noir-project-tags">
+                            <span>FastAPI</span> <span>WebSockets</span> <span>Vue 3</span>
+                        </div>
+                        <a href="https://aura-vibe.vercel.app/" target="_blank" class="noir-project-link">Live Demo →</a>
+                    </div>
+                </div>
+                <!-- Project 5: Tajweed Coach -->
+                <div class="noir-project-card">
+                    <div class="noir-project-info">
+                        <span class="project-category">Local AI Migration</span>
+                        <h3 class="noir-project-title">Tajweed Coach</h3>
+                        <p class="noir-project-desc">A privacy-focused Tajweed learning platform using local AI (Faster-Whisper & Ollama) for real-time recitation feedback.</p>
+                        <div class="noir-project-tags">
+                            <span>Faster-Whisper</span> <span>Ollama</span> <span>Python</span> <span>Vue.js</span>
+                        </div>
+                        <a href="https://github.com/Zakir176/Tajweedcoach" target="_blank" class="noir-project-link">View Repository →</a>
+                    </div>
+                </div>
+                <!-- Project 6: Apartex -->
+                <div class="noir-project-card">
+                    <div class="noir-project-info">
+                        <span class="project-category">Booking Platform</span>
+                        <h3 class="noir-project-title">Apartex</h3>
+                        <p class="noir-project-desc">A professional booking ecosystem for managing property listings, reservations, and real-time availability tracking.</p>
+                        <div class="noir-project-tags">
+                            <span>Full-Stack Web</span> <span>Database Design</span> <span>FastAPI</span> <span>Vue 3</span>
+                        </div>
+                        <a href="https://github.com/Zakir176/Apartex" target="_blank" class="noir-project-link">View Repository →</a>
+                    </div>
+                </div>
+                <!-- Project 7: Pickr -->
+                <div class="noir-project-card">
+                    <div class="noir-project-info">
+                        <span class="project-category">Smart Curation Tool</span>
+                        <h3 class="noir-project-title">Pickr</h3>
+                        <p class="noir-project-desc">Mobile-first tool that helps users curate photos by detecting quality issues, blur, and duplicates using intelligent analysis.</p>
+                        <div class="noir-project-tags">
+                            <span>Image Processing</span> <span>Mobile UX</span> <span>JS</span>
+                        </div>
+                        <a href="https://github.com/Zakir176/Pickr" target="_blank" class="noir-project-link">View Repository →</a>
+                    </div>
+                </div>
+                <!-- Project 8: BAS -->
+                <div class="noir-project-card">
+                    <div class="noir-project-info">
+                        <span class="project-category">Barcode Attendance</span>
+                        <h3 class="noir-project-title">BAS</h3>
+                        <p class="noir-project-desc">Automated attendance system replacing paper logs with instant barcode scanning and real-time lecturer dashboards.</p>
+                        <div class="noir-project-tags">
+                            <span>Vue.js 3</span> <span>Supabase</span> <span>Real-time</span>
+                        </div>
+                        <a href="https://github.com/Zakir176/BAS-Web" target="_blank" class="noir-project-link">View Repository →</a>
+                    </div>
+                </div>
             </div>
-            <div class="bento-item glass tall">
-                <div class="highlight-icon m-t-20">🎤</div>
-                <h3 class="highlight-title">Speaker</h3>
-                <p class="highlight-text">.NET Conf 2025 & GitHub Copilot Dev Days. Sharing system insights with the dev community.</p>
+            
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="https://github.com/Zakir176" target="_blank" class="btn-outline">See All Projects on GitHub</a>
             </div>
-            <div class="bento-item glass">
-                <h3 class="highlight-title">Vue.js Contributor</h3>
-                <p class="highlight-text">Actively contributing to core reactive systems & server-side rendering.</p>
-            </div>
-            <div class="bento-item glass">
-                <h3 class="highlight-title">Systems First</h3>
-                <p class="highlight-text">Practical scalability over aesthetics.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="about" class="section">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-content">
-                <p>I’m a Computer Science student and Systems Architect focused on building structured, resilient infrastructures that scale.</p>
-                <p>My approach is rooted in systems thinking — moving beyond simple interfaces to design data-driven pipelines, secure backend architectures, and high-performance frontend modules.</p>
-                <p>Through my internship at Uniplexity AI, I’ve gained experience working in collaborative development environments, debugging real-world systems, and understanding how production-level software is built and maintained.</p>
-                
-                <div class="interests-container m-t-30">
-                    <h3 class="heading-technical m-b-20">I’m particularly interested in:</h3>
-                    <ul style="list-style: none; display: flex; flex-wrap: wrap; gap: 10px;">
-                        <li class="tech-tagHighlight">System design and architecture</li>
-                        <li class="tech-tagHighlight">FinTech and automation</li>
-                        <li class="tech-tagHighlight">AI-assisted development</li>
-                        <li class="tech-tagHighlight">Building tools that simplify complex workflows</li>
+        <!-- Experience Section -->
+        <section id="experience" class="content-section">
+            <span class="section-label">Journey</span>
+            <h2 class="section-heading">Professional <span class="text-gradient">Experience</span>.</h2>
+            
+            <div class="noir-experience-stack">
+                <div class="noir-exp-item">
+                    <div class="noir-exp-header">
+                        <h3 class="noir-exp-title">Uniplexity AI</h3>
+                        <span class="noir-exp-date">July 2025 – Feb 2026</span>
+                    </div>
+                    <p class="noir-exp-role text-gradient">Software Development Intern</p>
+                    <ul class="noir-exp-list">
+                        <li>Developed core modules for AI-powered ERP systems for SMEs in Zambia.</li>
+                        <li>Optimized backend APIs and implemented cybersecurity best practices.</li>
+                        <li>Architected scalable cloud-native solutions in an Agile environment.</li>
+                    </ul>
+                </div>
+
+                <div class="noir-exp-item">
+                    <div class="noir-exp-header">
+                        <h3 class="noir-exp-title">Codeveda Technologies</h3>
+                        <span class="noir-exp-date">April 2026 – May 2026</span>
+                    </div>
+                    <p class="noir-exp-role text-gradient">Web Development Intern</p>
+                    <ul class="noir-exp-list">
+                        <li>Designed dynamic UIs using Vue.js and mastered full CRUD implementations.</li>
+                        <li>Developed AlphaJournal as a practical application of state management.</li>
                     </ul>
                 </div>
             </div>
-            <div class="about-visual">
-                <div class="systems-visualizer m-b-30">
-                    <!-- Minimalist Abstract Systems Visualizer -->
-                    <div class="visual-node" style="top: 20%; left: 20%;"></div>
-                    <div class="visual-node" style="top: 50%; left: 80%;"></div>
-                    <div class="visual-node" style="top: 80%; left: 30%;"></div>
-                    <div class="visual-line" style="top: 22%; left: 22%; width: 60%; transform: rotate(25deg);"></div>
-                    <div class="visual-line" style="top: 52%; left: 78%; width: 50%; transform: rotate(150deg);"></div>
-                </div>
-                <img src="images/Profile.jpg" alt="Zakir Motala - Systems Architect" loading="lazy">
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="experience" class="section">
-        <h2 class="section-title">Experience</h2>
-        <div class="experience-card" style="margin-bottom: 2rem;">
-            <div class="experience-header">
-                <div class="experience-info">
-                    <h3 class="experience-title">Codeveda Technologies</h3>
-                    <p class="experience-role">Web Development Intern</p>
-                </div>
-                <div class="experience-date">April 2026 – May 2026</div>
+        <!-- Community Section -->
+        <section id="speaking" class="content-section">
+            <span class="section-label">Community</span>
+            <h2 class="section-heading">Speaking & <span class="text-gradient">Impact</span>.</h2>
+            
+            <div class="noir-community-grid">
+                <a href="https://www.linkedin.com/posts/zakir-motala-7b824b23a_dotnetconf2025-dotnet-dotnetmaui-activity-7419826543507505152--QY5" target="_blank" class="noir-community-card">
+                    <div class="comm-icon">🎤</div>
+                    <div class="comm-info">
+                        <h4>.NET Conference Zambia</h4>
+                        <p>Speaker on scalable architectures and cross-platform dev.</p>
+                    </div>
+                </a>
+                <a href="https://www.linkedin.com/posts/zakir-motala-7b824b23a_githubcopilot-ai-developers-activity-7441408150358016000-HlxV" target="_blank" class="noir-community-card">
+                    <div class="comm-icon">🎤</div>
+                    <div class="comm-info">
+                        <h4>GitHub Copilot Dev Days</h4>
+                        <p>Speaker at Kitwe sharing AI-assisted developer workflows.</p>
+                    </div>
+                </a>
+                <a href="https://github.com/vuejs/core/pulls?q=is%3Apr+author%3AZakir176" target="_blank" class="noir-community-card">
+                    <div class="comm-icon">🌍</div>
+                    <div class="comm-info">
+                        <h4>Vue.js Open Source</h4>
+                        <p>Contributor to core reactive systems and SSR handling.</p>
+                    </div>
+                </a>
             </div>
-            <ul class="experience-list">
-                <li>Designed and implemented dynamic User Interfaces (UI) using the Vue.js framework.</li>
-                <li>Mastered the implementation of full CRUD (Create, Read, Update, Delete) operations in web applications.</li>
-                <li>Developed and deployed AlphaJournal as a practical application of state management and UI design concepts.</li>
-            </ul>
-        </div>
-        <div class="experience-card">
-            <div class="experience-header">
-                <div class="experience-info">
-                    <h3 class="experience-title">Uniplexity AI</h3>
-                    <p class="experience-role">Software Development Intern</p>
-                </div>
-                <div class="experience-date">July 2025 – Feb 2026</div>
-            </div>
-            <ul class="experience-list">
-                <li>Developed core modules for AI-powered ERP systems, catering to the resource management needs of SMEs and public institutions in Zambia.</li>
-                <li>Optimized production-level backend APIs, significantly improving system reliability and data processing efficiency.</li>
-                <li>Implemented cybersecurity best practices across institutional platforms, ensuring the integrity of sensitive client data.</li>
-                <li>Collaborated in an Agile environment with senior engineers to architect scalable cloud-native solutions.</li>
-            </ul>
-            <div class="m-t-25">
-                <a href="https://medium.com/@zakirhusseinmotala76/what-my-internship-at-uniplexity-ai-taught-me-about-real-software-engineering-5176d8689fe2" class="hero-cta" target="_blank" style="padding: 10px 20px; font-size: 0.85rem; border-color: hsl(var(--accent));">Read Internship Experience on Medium</a>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="speaking" class="section">
-        <h2 class="section-title">Speaking & Community</h2>
-        <div class="speaking-grid">
-            <a href="https://www.linkedin.com/posts/zakir-motala-7b824b23a_dotnetconf2025-dotnet-dotnetmaui-activity-7419826543507505152--QY5" class="speaking-item" target="_blank" style="text-decoration: none;">
-                <div class="speaking-icon">🎤</div>
-                <div class="speaking-content">
-                    <h3 class="speaking-title">Speaker — .NET Conference Zambia</h3>
-                    <p class="speaking-text">Sharing insights on scalable .NET architectures and cross-platform development. [View Post]</p>
+        <!-- About Section -->
+        <section id="about" class="content-section">
+            <span class="section-label">About</span>
+            <h2 class="section-heading">The <span class="text-gradient">Architect</span>.</h2>
+            
+            <div class="noir-about-grid">
+                <div class="noir-about-text">
+                    <p>I’m a Computer Science student and Systems Architect focused on building structured, resilient infrastructures that scale.</p>
+                    <p>My approach is rooted in systems thinking — moving beyond simple interfaces to design data-driven pipelines, secure backend architectures, and high-performance frontend modules.</p>
+                    <div class="noir-interests">
+                        <span class="interest-tag">FinTech</span>
+                        <span class="interest-tag">System Design</span>
+                        <span class="interest-tag">AI Automation</span>
+                    </div>
                 </div>
-            </a>
-            <a href="https://www.linkedin.com/posts/zakir-motala-7b824b23a_githubcopilot-ai-developers-activity-7441408150358016000-HlxV" class="speaking-item" target="_blank" style="text-decoration: none;">
-                <div class="speaking-icon">🎤</div>
-                <div class="speaking-content">
-                    <h3 class="speaking-title">Speaker — GitHub Copilot Dev Days Kitwe</h3>
-                    <p class="speaking-text">Demonstrating AI-assisted developer workflows and prompt engineering for systems. [View Post]</p>
+                <div class="noir-about-visual">
+                    <img src="images/Profile.jpg" alt="Zakir Motala" class="about-image-mini">
                 </div>
-            </a>
-            <a href="https://github.com/vuejs/core/pulls?q=is%3Apr+author%3AZakir176" class="speaking-item" target="_blank" style="text-decoration: none;">
-                <div class="speaking-icon">🌍</div>
-                <div class="speaking-content">
-                    <h3 class="speaking-title">Contributor — Vue.js Open Source</h3>
-                    <p class="speaking-text">Contributing to core reactive systems and server-side rendering, including robust web stream backpressure and error handling. [View Contributions]</p>
-                </div>
-            </a>
-        </div>
-        <p class="speaking-footer">I enjoy sharing knowledge and making complex technical concepts more accessible to developers.</p>
-    </section>
+            </div>
+        </section>
 
-    <section id="skills" class="section">
-        <h2 class="section-title">Skills & Expertise</h2>
-        <div class="bento-grid">
-            <div class="bento-item glass wide">
-                <div class="skill-icon m-t-20">💻</div>
-                <h3 class="skill-title">Frontend Architecture</h3>
-                <p class="skill-desc">Building responsive, high-performance interfaces with a focus on modularity.</p>
-                <div class="tech-list">
-                    <span class="tech-tag">Vue 3</span>
-                    <span class="tech-tag">Pinia</span>
-                    <span class="tech-tag">Tailwind</span>
-                    <span class="tech-tag">TypeScript</span>
-                </div>
-            </div>
-            <div class="bento-item glass tall">
-                <div class="skill-icon m-t-20">⚙️</div>
-                <h3 class="skill-title">Backend & APIs</h3>
-                <p class="skill-desc">Designing robust RESTful services and database schemas that scale. Experts in .NET ecosystem.</p>
-                <div class="tech-list">
-                    <span class="tech-tag">.NET (C#)</span>
-                    <span class="tech-tag">PostgreSQL</span>
-                    <span class="tech-tag">RESTful</span>
-                </div>
-            </div>
-            <div class="bento-item glass">
-                <h3 class="skill-title">DevOps & Tools</h3>
-                <div class="tech-list">
-                    <span class="tech-tag">Git</span>
-                    <span class="tech-tag">Postman</span>
-                    <span class="tech-tag">Firebase</span>
-                </div>
-            </div>
-            <div class="bento-item glass">
-                <h3 class="skill-title">System Design</h3>
-                <p class="skill-desc" style="font-size: 0.85rem;">Architecture, Documentation & Optimization.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects" class="section">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-header">📝</div>
-                <div class="project-content">
-                    <h3 class="project-title">AlphaJournal — Vue CRUD App</h3>
-                    <p class="project-desc">A modern journal application structured around robust CRUD operations and sleek UI design methodologies using Vue. Developed during the Codeveda internship.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Vue.js</span>
-                        <span class="project-tag">CRUD</span>
-                        <span class="project-tag">UI/UX</span>
-                    </div>
-                    <div class="project-specs-row">
-                        <div class="spec-item"><span class="spec-label">Stack</span><span class="spec-value">Vue</span></div>
-                        <div class="spec-item"><span class="spec-label">Focus</span><span class="spec-value">UI / CRUD</span></div>
-                        <div class="spec-item"><span class="spec-label">Role</span><span class="spec-value">Intern</span></div>
-                    </div>
-                    <div class="project-demonstrates">Demonstrates: UI Design, State Management, Data Operations</div>
-                    <div class="project-links">
-                        <a href="https://github.com/Zakir176/AlphaJournal" class="project-link secondary" target="_blank">GitHub</a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-header">
-                    <img src="images/projects/streamos.png" alt="StreamOS Mockup" onerror="this.parentElement.innerHTML='🎬'">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">StreamOS — Media Infrastructure</h3>
-                    <p class="project-desc">A private media streaming OS with an automated indexing pipeline and thumbnail generation. Built for system-level processing and multi-profile content isolation.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Python</span>
-                        <span class="project-tag">Vue.js</span>
-                    </div>
-                    <div class="project-specs-row">
-                        <div class="spec-item"><span class="spec-label">Stack</span><span class="spec-value">Python / Vue</span></div>
-                        <div class="spec-item"><span class="spec-label">Arch</span><span class="spec-value">Service-Based</span></div>
-                        <div class="spec-item"><span class="spec-label">Status</span><span class="spec-value">Operating</span></div>
-                    </div>
-                    <div class="project-demonstrates">Demonstrates: System-level processing, Media indexing</div>
-                    <div class="project-links">
-                        <a href="https://github.com/Zakir176/StreamOS" class="project-link secondary" target="_blank">GitHub</a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-header">
-                    <img src="images/projects/pickr.png" alt="Pickr App" onerror="this.parentElement.innerHTML='📸'">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Pickr — Smart Curation Tool</h3>
-                    <p class="project-desc">A mobile-first tool that helps users quickly curate photos by detecting quality issues, blur, and duplicates using intelligent analysis.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Image Processing</span>
-                        <span class="project-tag">Mobile UX</span>
-                    </div>
-                    <div class="project-specs-row">
-                        <div class="spec-item"><span class="spec-label">Stack</span><span class="spec-value">JS / Mobile</span></div>
-                        <div class="spec-item"><span class="spec-label">Logic</span><span class="spec-value">Smart Filter</span></div>
-                        <div class="spec-item"><span class="spec-label">Scale</span><span class="spec-value">Mobile Tool</span></div>
-                    </div>
-                    <div class="project-demonstrates">Demonstrates: Product thinking, Practical automation</div>
-                    <div class="project-links">
-                        <a href="https://github.com/Zakir176/Pickr" class="project-link secondary" target="_blank">GitHub</a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-header">
-                    <img src="images/projects/aura-vibe.png" alt="Aura Vibe" onerror="this.parentElement.innerHTML='🎶'">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Aura Vibe — Collaborative DJ</h3>
-                    <p class="project-desc">Real-time synchronised music platform featuring instant session sharing via QR codes and collaborative queue management via WebSockets.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">FastAPI</span>
-                        <span class="project-tag">WebSockets</span>
-                        <span class="project-tag">Vue 3</span>
-                    </div>
-                    <div class="project-specs-row">
-                        <div class="spec-item"><span class="spec-label">Stack</span><span class="spec-value">FastAPI / Vue</span></div>
-                        <div class="spec-item"><span class="spec-label">Arch</span><span class="spec-value">Real-time</span></div>
-                        <div class="spec-item"><span class="spec-label">Latency</span><span class="spec-value">&lt; 100ms</span></div>
-                    </div>
-                    <div class="project-demonstrates">Demonstrates: Real-time systems, Interaction design</div>
-                    <div class="project-links">
-                        <a href="https://aura-vibe.vercel.app/" class="project-link primary" target="_blank">Live Demo</a>
-                        <a href="https://github.com/Zakir176/AURA-VIBE" class="project-link secondary" target="_blank">GitHub</a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-header">💳</div>
-                <div class="project-content">
-                    <h3 class="project-title">UB App — AI-Powered POS</h3>
-                    <p class="project-desc">A smart POS system designed for ZRA (Zambia Revenue Authority) compliance, featuring AI-driven invoice support and SME modules.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Backend APIs</span>
-                        <span class="project-tag">AI Integration</span>
-                    </div>
-                    <div class="project-specs-row">
-                        <div class="spec-item"><span class="spec-label">Stack</span><span class="spec-value">.NET / C#</span></div>
-                        <div class="spec-item"><span class="spec-label">Compliance</span><span class="spec-value">ZRA Core</span></div>
-                        <div class="spec-item"><span class="spec-label">Status</span><span class="spec-value">Production</span></div>
-                    </div>
-                    <div class="project-demonstrates">Demonstrates: Enterprise systems, Fintech & Compliance</div>
-                    <div class="project-links">
-                        <a href="http://uniplexitybusiness.com/" class="project-link primary" target="_blank">Visit Site</a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-header">🏢</div>
-                <div class="project-content">
-                    <h3 class="project-title">Apartex — Booking Platform</h3>
-                    <p class="project-desc">A full-stack booking system for managing property listings, reservations, and complex user interactions with real-time availability tracking.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Full-Stack Web</span>
-                        <span class="project-tag">Database Design</span>
-                    </div>
-                    <div class="project-specs-row">
-                        <div class="spec-item"><span class="spec-label">Stack</span><span class="spec-value">Full-Stack</span></div>
-                        <div class="spec-item"><span class="spec-label">Data</span><span class="spec-value">Relation DB</span></div>
-                        <div class="spec-item"><span class="spec-label">Role</span><span class="spec-value">Architect</span></div>
-                    </div>
-                    <div class="project-demonstrates">Demonstrates: Platform design, Data modeling</div>
-                    <div class="project-links">
-                        <a href="https://github.com/Zakir176/Apartex" class="project-link secondary" target="_blank">GitHub</a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-header">
-                    <img src="images/projects/bas-home.png" alt="BAS - Barcode Attendance" onerror="this.parentElement.innerHTML='🎫'">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">BAS — Barcode Attendance</h3>
-                    <p class="project-desc">Automated attendance system replacing paper logs with instant barcode scanning. Synchronized lecturer/student dashboards with real-time logging.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Vue.js 3</span>
-                        <span class="project-tag">Supabase</span>
-                    </div>
-                    <div class="project-specs-row">
-                        <div class="spec-item"><span class="spec-label">Stack</span><span class="spec-value">Vue / Supabase</span></div>
-                        <div class="spec-item"><span class="spec-label">Sync</span><span class="spec-value">Real-time</span></div>
-                        <div class="spec-item"><span class="spec-label">UX</span><span class="spec-value">QR-Based</span></div>
-                    </div>
-                    <div class="project-demonstrates">Demonstrates: System integration, Workflow automation</div>
-                    <div class="project-links">
-                        <a href="https://bas-web-lemon.vercel.app/" class="project-link primary" target="_blank">Live Demo</a>
-                        <a href="https://github.com/Zakir176/BAS-Web" class="project-link secondary" target="_blank">GitHub</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="section">
-        <h2 class="section-title">Let's Connect</h2>
-        <div class="contact-content">
-            <p class="contact-text">I’m open to collaborations, internships, and opportunities to build impactful systems. Ready to collaborate on innovative projects?</p>
-            <div class="contact-methods">
-                <a href="mailto:zakirhusseinmotala76@gmail.com" class="contact-method" aria-label="Send email">
+        <!-- Contact Section -->
+        <section id="contact" class="services" style="padding-top: 100px;">
+            <span class="section-label">Contact</span>
+            <h2 class="section-heading" style="text-align: center;">Let's <span class="text-gradient">Connect</span>.</h2>
+            
+            <div class="noir-contact-grid">
+                <a href="mailto:zakirhusseinmotala76@gmail.com" class="noir-contact-card">
                     <span class="contact-icon">📧</span>
-                    <span class="contact-label">Email.</span>
+                    <span>Email</span>
                 </a>
-                <a href="https://linkedin.com/in/zakir-motala" class="contact-method" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+                <a href="https://linkedin.com/in/zakir-motala" target="_blank" class="noir-contact-card">
                     <span class="contact-icon">💼</span>
-                    <span class="contact-label">LinkedIn</span>
-                </a>
-                <a href="https://github.com/Zakir176" class="contact-method" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
-                    <span class="contact-icon">🐙</span>
-                    <span class="contact-label">GitHub</span>
+                    <span>LinkedIn</span>
                 </a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer>
-        <p>&copy; 2025 Zakir Motala | Systems Architect & Full-Stack Developer</p>
-    </footer>
+        <!-- Simple Footer -->
+        <footer style="padding: 100px 60px 60px; text-align: center; border-top: 1px solid var(--border);">
+            <p style="color: var(--text-gray); font-size: 0.9rem;">&copy; 2026 Zakir Motala | Systems Architect & Full-Stack Developer</p>
+        </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
